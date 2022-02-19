@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <!-- <script src="https://kit.fontawesome.com/69c7c040d1.js" crossorigin="anonymous"></script> -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet" href="./css/tooltip.css">
+    <link rel="stylesheet" href="./css/sideBar.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./script/jspdf.min.js"></script>
+
+</head>
+
+<body data-theme="default">
+
+    <div class="container container-border  scroller">
+
+        <div id="overlay" class="intro displayNone">
+
+            <div class="introClose"><i class="fas fa-times"></i></div>
+            <div class="heroTitle">
+                --- Notezy ---
+            </div>
+            <div class="heroInstructions">
+                <ul class="instructionUl">
+                    <li class="instruction">- Quick and Easy way to take notes</li>
+                    <li class="instruction">- Click on the + button to get started</li>
+                    <li class="instruction">- Organise your notes into seperate folders</li>
+                    <li class="instruction">- Click on the hamburger to access the pages</li>
+                </ul>
+            </div>
+
+            <div class="contact">
+                <a target="_blank" href="https://github.com/Kishore121523"><i class="fab fa-github"></i></a>
+                <a target="_blank" href="https://www.linkedin.com/in/kishore-yogeswaran-7946291a6/"><i
+                        class="fab fa-linkedin"></i></a>
+                <a target="_blank" href="https://www.instagram.com/_kishoredesigns_/"><i class="fab fa-instagram"></i>
+                </a>
+            </div>
+
+        </div>
+
+        <!-- The sidebar -->
+        <div id="overlaySideBar" class="displayNone">
+            <div class="sidebar sideBarClosed">
+                <p class="emptyNotification">Click the <span class="plusText highlightText">+</span> button to add a
+                    <span class="highlightText newFold"> New Folder</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="top-part">
+            <div class="hamburger"><i class="fas fa-bars"></i></div>
+            <div class="head"></div>
+            <div class="info tooltip">
+                <div class="bottom">Instructions <i></i></div>
+                <i class="fas fa-info-circle"></i>
+            </div>
+            <div class="folder-add tooltip">
+                <div class="bottomAddPage">Add New Page<i></i></div>
+                <i class="fas fa-plus"></i></div>
+        </div>
+
+        <div class="allPages">
+
+            <div class="dropdown">
+                <button class="dropbtn"><i class="fas fa-caret-down"></i></button>
+
+                <div class="dropdown-content">
+
+                    <a class="tooltip">
+                        <i class="far fa-question-circle toggler"></i>
+                        <div class="left">Disable Tooltip
+                        </div>
+                    </a>
+
+                    <a class="tooltip">
+                        <i class="far fa-file-download download"></i>
+                        <div class="left">Save as PDF
+                        </div>
+                    </a>
+
+                    <a class=""><i class="fas fa-info-circle themeSwitch"></i></a>
+                </div>
+            </div>
+
+            <!-- <div id="0" style="display: block;">
+                <ul class="cards" id="dasdas">
+                    <li class="card" id="card-0">
+                        <div class="card-title">das</div>
+                        <div class="card-inner">
+                            <div class="card-content">dsadsd</div>
+                            <div class="card-options">
+                                <div class="card-update tooltip"><i class="far fa-edit" aria-hidden="true"></i>
+                                    <div class="bottomPinToTop">Update Note</div>
+                                </div>
+                                <div class="card-fav tooltip"><i class="far fa-star" aria-hidden="true"></i>
+                                    <div class="bottomPinToTop">Pin to Top</div>
+                                </div>
+                                <div class="card-delete tooltip">
+                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                    <img src="./assets/bin.svg" alt="">
+                                    <div class="bottomPinToTop">Delete Card</div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <div class="addBtnDiv" id="btn-0"><button class="addBtn">Add a Note</button></div>
+                </ul>
+            </div> -->
+
+        </div>
+
+
+        <!-- modal -->
+        <div class="modal displayNone" id="overlay">
+            <div class="modalContainer">
+                <label class="modalLabelText" for="tagline">Title</label>
+                <input id="tagline" type="text">
+                <label class="modalLabelText" for="note">Add your Note</label>
+                <textarea name="note" id="note" cols="10" rows="5"></textarea>
+                <button class="modalBtn">Add</button>
+            </div>
+        </div>
+
+        <div class="modalUpd displayNone" id="overlayUpd">
+            <div class="modalContainer">
+                <label class="modalLabelText" for="taglineUpd">Title</label>
+                <input id="taglineUpd" type="text" autofocus>
+                <label class="modalText" for="noteUpd">Add your Note</label>
+                <textarea name="noteUpd" id="noteUpd" cols="10" rows="5"></textarea>
+                <button class="modalBtnUpd">Update</button>
+            </div>
+        </div>
+
+        <div class="openFolderModal displayNone" id="overlayFolder">
+            <div class="modalContainer">
+                <label class="modalLabelText" for="nameFolder">Name of Page</label>
+                <input id="nameFolder" type="text">
+            </div>
+            <button class="addFolderBtn">Add Page</button>
+        </div>
+
+        <div class="alertModal displayNone" id="overlayAlert">
+            <p class="alertText"></p>
+        </div>
+
+        <div class="nameFileModal displayNone" id="overlaySaveFile">
+            <div class="modalContainer">
+                <label class="modalLabelText" for="nameFolder">Name your PDF</label>
+                <input id="nameFile" type="text">
+            </div>
+            <button class="nameFileBtn">Save</button>
+        </div>
+
+        <div class="deleteModal displayNone" id="overlayDelete">
+            <div class="modalContainerNew">
+                <p class="deleteText">This note will be Deleted Permanantly!</p>
+                <div class="buttonDeleteDiv">
+                    <button class="deleteCardBtn" id="deleteCard">Delete Note</button>
+                    <button id="takeMeback" class="deleteCardBtn">Take me back</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</body>
+
+<script type="text/javascript" src="./script/modalFunctions.js"></script>
+<script type="text/javascript" src="./script/script.js"></script>
+
+
+</html>

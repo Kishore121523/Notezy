@@ -1,0 +1,83 @@
+/* The side navigation menu */
+
+.sidebar {
+    margin: 0;
+    padding: 0;
+    width: 150px;
+    background-color: var(--backgroundColor);
+    /* opacity: 0.9; */
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    border-radius: 1px 10px 10px 1px;
+    transition: all 300ms ease-in;
+    z-index: 3;
+}
+
+.emptyNotification {
+    color: var(--fontColor);
+    width: 80%;
+    text-align: center;
+    margin: auto;
+    margin-top: 105%;
+    font-size: 1rem;
+    line-height: 1.5rem;
+}
+
+.highlightText {
+    color: var(--iconColor);
+}
+
+.newFold {
+    cursor: pointer;
+}
+
+.plusText {
+    font-size: 2rem;
+    vertical-align: -2px;
+}
+
+#overlaySideBar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 400px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    transition: all 300ms ease-in;
+    z-index: 2;
+}
+
+.displayNone {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.displayBlock {
+    visibility: visible;
+    opacity: 1;
+}
+
+.sideBarClosed {
+    margin-left: -180px;
+}
+
+.sidebar a {
+    display: block;
+    color: rgb(160, 160, 160);
+    padding: 16px;
+    text-decoration: none;
+    transition: all 200ms ease;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.sidebar a.active {
+    background-color: rgb(27, 27, 27);
+    color: var(--iconColor);
+}
+
+.sidebar a:hover:not(.active) {
+    background-color: #414141;
+    color: var(--fontColor);
+}

@@ -1,0 +1,611 @@
+@import url("http://fonts.cdnfonts.com/css/sofia-pro");
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;400&display=swap');
+
+/* :root {
+    --backgroundColor: #2b2b2b;
+    --level1Dark: #363636;
+    --iconColor: #f4ae95;
+    --shadow: #121212;
+    --fontColor: #d6d4d4;
+} */
+
+
+/* peach colors */
+
+body[data-theme='default'] {
+    --backgroundColor: #2b2b2b;
+    --level1Dark: #363636;
+    --iconColor: #f4ae95;
+    --shadow: #121212;
+    --fontColor: #d6d4d4;
+}
+
+body[data-theme='white'] {
+    --backgroundColor: #2b2b2b;
+    --level1Dark: #363636;
+    --iconColor: #d6d0de;
+    --shadow: #121212;
+    --fontColor: #d6d4d4;
+}
+
+body[data-theme='green'] {
+    --backgroundColor: #2b2b2b;
+    --level1Dark: #363636;
+    --iconColor: #1aa879;
+    --shadow: #121212;
+    --fontColor: #d6d4d4;
+}
+
+body[data-theme='orange'] {
+    --backgroundColor: #2b2b2b;
+    --level1Dark: #363636;
+    --iconColor: rgb(240, 150, 70);
+    --shadow: #121212;
+    --fontColor: #d6d4d4;
+}
+
+body[data-theme='purple'] {
+    --backgroundColor: #2b2b2b;
+    --level1Dark: #363636;
+    --iconColor: #bb86fc;
+    --shadow: #121212;
+    --fontColor: #d6d4d4;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+    margin: 0;
+}
+
+ul[role='list'],
+ol[role='list'] {
+    list-style: none;
+}
+
+html:focus-within {
+    scroll-behavior: smooth;
+}
+
+
+/* body {
+    min-height: 100vh;
+    text-rendering: optimizeSpeed;
+    line-height: 1.5;
+} */
+
+a:not([class]) {
+    text-decoration-skip-ink: auto;
+}
+
+img,
+picture {
+    max-width: 100%;
+    display: block;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html:focus-within {
+        scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+body {
+    width: 400px;
+    height: 400px;
+    background-color: var(--backgroundColor);
+    font-family: "Sofia Pro", sans-serif;
+}
+
+.displayNonePure {
+    display: none;
+}
+
+.displayBlockPure {
+    display: block;
+}
+
+.container {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 100%;
+    width: 100%;
+    padding-bottom: 20px;
+    transition: all 2s;
+    border-radius: 2px;
+    border: 5px solid rgb(80, 79, 79);
+}
+
+.container-border {
+    z-index: 100;
+}
+
+.intro {
+    color: var(--fontColor);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: context-menu;
+}
+
+.introClose {
+    display: block;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 300ms ease;
+}
+
+.introClose:hover {
+    color: var(--iconColor);
+}
+
+.heroTitle {
+    color: var(--iconColor);
+    font-size: 2rem;
+    padding-top: 10px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.heroInstructions {
+    width: 80%;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.heroInstructions>ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.instructionUl>li {
+    margin-bottom: 6px;
+}
+
+.instruction {
+    font-size: 1rem;
+}
+
+.contact {
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+.contact>* {
+    color: var(--fontColor);
+    padding: 2px 15px;
+    transition: all 300ms ease;
+    cursor: pointer;
+}
+
+.contact>*:hover {
+    color: var(--iconColor);
+}
+
+.top-part {
+    display: flex;
+    z-index: 1;
+    font-size: 1.3rem;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.9rem;
+    position: -webkit-sticky;
+    /* Safari */
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: var(--backgroundColor);
+    -webkit-box-shadow: 0px 28px 44px 0px rgba(0, 0, 0, 0.59);
+    -moz-box-shadow: 0px 28px 44px 0px rgba(0, 0, 0, 0.59);
+    box-shadow: 2px 1px 12px 0px rgba(0, 0, 0, 0.7);
+}
+
+.hamburger {
+    padding: 1rem;
+    padding-left: 1.1rem;
+    color: var(--iconColor);
+    cursor: pointer;
+    flex: 1 1 20%;
+}
+
+.head {
+    color: var(--iconColor);
+    padding: 1rem;
+    flex: 1 1 60%;
+    text-align: center;
+}
+
+.info {
+    padding: 0;
+    color: var(--iconColor);
+    cursor: pointer;
+    flex: 1 1 10%;
+    text-align: center;
+}
+
+.folder-add {
+    flex: 1 1 10%;
+    padding: 0.9rem;
+    color: var(--iconColor);
+    cursor: pointer;
+}
+
+.addBtnDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.addBtn {
+    font-size: 0.8rem;
+    cursor: pointer;
+    padding: 0.7em 1em;
+    border-radius: 5px;
+    border: none;
+    margin-top: 5px;
+    color: var(--iconColor);
+    background-color: var(--level1Dark);
+    box-shadow: 2px 3px 5px rgb(18, 18, 18, 0.5);
+    transition: all 200ms linear;
+}
+
+.addBtn:hover {
+    color: var(--fontColor);
+    box-shadow: 2px 3px 5px rgb(18, 18, 18, 0.5);
+}
+
+.cards {
+    margin: 0px;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0px;
+    margin-bottom: 2px;
+    z-index: 1;
+}
+
+.card {
+    align-self: center;
+    background-color: var(--level1Dark);
+    margin: 8px 20px;
+    max-width: 270px;
+    color: aliceblue;
+    border-radius: 5px;
+    box-shadow: 2px 5px 10px rgb(18, 18, 18, 0.3);
+}
+
+.card-title {
+    text-align: center;
+    width: 100%;
+    word-break: break-all;
+    hyphens: none;
+    align-self: flex-start;
+    padding: 2px 10px 6px 2px;
+    margin: 0;
+    padding: 8px 10px;
+    font-size: 1rem;
+    border-radius: 5px 5px 0px 0px;
+    background-color: rgb(18, 18, 18, 0.8);
+    color: var(--iconColor);
+}
+
+.card-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 10px;
+    padding-top: 10px;
+    font-size: 0.9rem;
+}
+
+.card-content {
+    width: 100%;
+    word-break: break-all;
+    hyphens: none;
+    align-self: flex-start;
+    padding: 2px 10px 6px 2px;
+    margin: 0;
+    line-height: 18px;
+    color: var(--fontColor);
+}
+
+.card-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 0.85rem;
+    color: var(--iconColor);
+    background-color: #3f3f3f;
+    box-shadow: 2px 3px 5px rgb(18, 18, 18, 0.5);
+}
+
+.card-options>* {
+    padding: 2px;
+}
+
+.card-options-big {
+    color: var(--iconColor);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #3f3f3f;
+    box-shadow: 2px 3px 5px rgb(18, 18, 18, 0.5);
+}
+
+.card-delete {
+    cursor: pointer;
+}
+
+.card-update {
+    cursor: pointer;
+}
+
+.card-fav {
+    cursor: pointer;
+}
+
+
+/* Modal */
+
+input,
+select,
+textarea {
+    caret-color: var(--iconColor);
+    color: var(--fontColor);
+    background-color: var(--backgroundColor);
+    border: 0px;
+    padding: 5px;
+}
+
+.modal,
+.modalUpd,
+.openFolderModal,
+.nameFileModal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px;
+    text-align: center;
+    color: var(--fontColor);
+    gap: 10px;
+    visibility: visible;
+    opacity: 1;
+    transition: all 300ms ease-in;
+}
+
+.openFolderModal {
+    gap: 2px;
+}
+
+#tagline,
+#taglineUpd,
+#nameFolder,
+#nameFile {
+    border-radius: 5px;
+    border-color: white;
+    outline: none;
+    padding: 5px 5px;
+    font-size: 0.9rem;
+}
+
+#note,
+#noteUpd {
+    border-radius: 5px;
+    outline: none;
+    padding: 5px 5px;
+    font-size: 0.9rem;
+}
+
+label {
+    color: var(--iconColor);
+}
+
+.modalContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    z-index: 4;
+}
+
+#overlay,
+#overlayUpd,
+#overlayFolder,
+#overlayAlert,
+#overlayDelete,
+#overlaySaveFile {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 400px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    transition: all 300ms ease-in;
+    z-index: 2;
+}
+
+.displayNone {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.displayBlock {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modalBtn,
+.modalBtnUpd {
+    font-size: 0.8rem;
+    cursor: pointer;
+    padding: 7px;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--backgroundColor);
+    color: var(--iconColor);
+    margin-top: 5px;
+    transition: all 300ms ease;
+}
+
+.addFolderBtn,
+.nameFileBtn {
+    display: block;
+    width: 40%;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 0.8rem;
+    cursor: pointer;
+    padding: 7px;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--backgroundColor);
+    color: var(--iconColor);
+    transition: all 300ms ease;
+}
+
+.modalBtn:hover,
+.modalBtnUpd:hover,
+.addFolderBtn:hover {
+    color: var(--fontColor);
+}
+
+.modalLabelText {
+    font-size: 1rem;
+}
+
+.alertModal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70%;
+}
+
+.alertText {
+    font-size: 1rem;
+    color: white;
+}
+
+
+/* Delete a card styles */
+
+.modalContainerNew {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 25px;
+}
+
+.deleteModal {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    height: 70%;
+}
+
+.buttonDeleteDiv {
+    display: flex;
+    justify-content: center;
+}
+
+.deleteText {
+    font-size: 1rem;
+    color: white;
+}
+
+.buttonDeleteDiv> :nth-child(1) {
+    border: 1px solid rgba(255, 0, 0, 0.7);
+}
+
+.deleteCardBtn {
+    font-size: 0.8rem;
+    cursor: pointer;
+    padding: 7px;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--backgroundColor);
+    color: var(--iconColor);
+    transition: all 300ms ease;
+    margin: auto 7px;
+    width: 6.5rem;
+}
+
+
+/* Scrollbar */
+
+
+/* .scroller {
+    scrollbar-width: thin;
+    transition: all 300ms ease;
+    z-index: 0;
+    overflow-y: scroll;
+    scrollbar-color: rgb(122, 122, 122) var(--backgroundColor);
+    border-radius: 20px;
+    transition: all 300ms;
+} */
+
+::-webkit-scrollbar {
+    width: 5px;
+    transition: all 300ms ease;
+    z-index: 0;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--backgroundColor);
+    transition: all 300ms;
+    z-index: 0;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(122, 122, 122);
+    border-radius: 20px;
+    transition: all 2s;
+    z-index: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--iconColor);
+    transition: all 300ms;
+}

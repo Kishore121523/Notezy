@@ -1,0 +1,18 @@
+{
+    "name": "Notezy",
+    "version": "0.0.1",
+    "manifest_version": 2,
+    "background": {
+        "scripts": ["script/modalFunctions.js", "script/script.js"]
+    },
+    "browser_action": {
+        "default_popup": "index.html",
+        "default_icon": "logo.png"
+    },
+    "content_scripts": [{
+        "matches": ["*://*.mozilla.org/*"],
+        "js": ["script/modalFunctions.js", "script/script.js"]
+    }],
+
+    "permissions": ["activeTab"]
+}

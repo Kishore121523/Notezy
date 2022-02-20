@@ -47,6 +47,10 @@
         <!-- The sidebar -->
         <div id="overlaySideBar" class="displayNone">
             <div class="sidebar sideBarClosed">
+                <!-- <div class="deletePage active">
+                    <a href="#" class="pageLink">sdsdd</a>
+                    <i class="far fa-trash-alt deleteIcon"></i>
+                </div> -->
                 <p class="emptyNotification">Click the <span class="plusText highlightText">+</span> button to add a
                     <span class="highlightText newFold"> New Folder</span>
                 </p>
@@ -84,7 +88,8 @@
                         </div>
                     </a>
 
-                    <a class=""><i class="fas fa-info-circle themeSwitch"></i></a>
+                    <a class="tooltip"><i class="fal fa-palette themeSwitch"></i><div class="left">Themes
+                    </div></a>
                 </div>
             </div>
 
@@ -163,6 +168,16 @@
                 <div class="buttonDeleteDiv">
                     <button class="deleteCardBtn" id="deleteCard">Delete Note</button>
                     <button id="takeMeback" class="deleteCardBtn">Take me back</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="deletePageModal displayNone" id="overlayDeletePage">
+            <div class="modalContainerNew">
+                <p class="deletePageText">This page will be Deleted Permanantly!</p>
+                <div class="buttonDeleteDiv">
+                    <button class="deleteCardBtn" id="deletePage">Delete Page</button>
+                    <button id="takeMebackPage" class="deleteCardBtn">Take me back</button>
                 </div>
             </div>
         </div>

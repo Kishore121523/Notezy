@@ -455,6 +455,7 @@ label {
 #overlayFolder,
 #overlayAlert,
 #overlayDelete,
+#overlayDeletePage,
 #overlaySaveFile {
     position: absolute;
     top: 0;
@@ -537,7 +538,8 @@ label {
     padding: 25px;
 }
 
-.deleteModal {
+.deleteModal,
+.deletePageModal {
     display: flex;
     gap: 2rem;
     justify-content: center;
@@ -550,7 +552,8 @@ label {
     justify-content: center;
 }
 
-.deleteText {
+.deleteText,
+.deletePageText {
     font-size: 1rem;
     color: white;
 }

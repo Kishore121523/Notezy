@@ -50,6 +50,20 @@ function closeDeleteModal(e) {
     }
 }
 
+function openDeletePageModal() {
+    document.querySelector('.deletePageModal').classList.remove("displayNone");
+    document.querySelector('.deletePageModal').classList.add("displayBlock");
+}
+
+
+function closeDeletePageModal(e) {
+
+    if (e.target.classList.contains('deletePageModal')) {
+        document.querySelector('.deletePageModal').classList.remove("displayBlock");
+        document.querySelector('.deletePageModal').classList.add("displayNone");
+    }
+}
+
 function closeSaveFileModal(e) {
 
     if (e.target.classList.contains('nameFileModal')) {

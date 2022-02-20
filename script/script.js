@@ -85,15 +85,28 @@ function addToSideBar() {
     if (!allPageArr.includes(nameOfFolder.value)) {
 
         if (nameOfFolder.value === '') {
-            alertMsg("Add a name to your Folder")
+            alertMsg("Name your Page")
             return
         }
 
+        const linkDiv = document.createElement('div');
+        const deleteIcon = document.createElement('i')
         const a = document.createElement('a');
+
+        deleteIcon.classList.add('far')
+        deleteIcon.classList.add('fa-trash-alt')
+
+        linkDiv.classList.add('deletePage');
+        deleteIcon.classList.add('deleteIcon')
+
         a.setAttribute('id', sidebarLinkID)
         a.className = 'pageLink'
         a.innerHTML = nameOfFolder.value;
-        document.querySelector('.sidebar').appendChild(a);
+
+        linkDiv.appendChild(a)
+        linkDiv.appendChild(deleteIcon)
+
+        document.querySelector('.sidebar').appendChild(linkDiv);
 
         // Check for atleast one anchor tag is present
         var hasChildDiv = document.querySelector(".sidebar").querySelector("a");
@@ -111,7 +124,7 @@ function addToSideBar() {
         sidebarLinkID++;
 
     } else {
-        alertMsg("You have added another page with same name")
+        alertMsg("You have added another page with same name!")
         return
     }
 
@@ -124,10 +137,10 @@ function checkActive(linkId) {
     document.querySelectorAll('.pageLink').forEach((element) => {
         let idEle = parseInt(element.id)
         if (idEle === linkId) {
-            element.classList.add('active')
+            element.parentElement.classList.add('active')
         } else {
-            if (element.classList.contains('active')) {
-                element.classList.remove('active')
+            if (element.parentElement.classList.contains('active')) {
+                element.parentElement.classList.remove('active')
             }
         }
 
@@ -141,17 +154,32 @@ document.querySelector('#overlayFolder').addEventListener('click', closeFolderMo
 document.querySelector('.sidebar').addEventListener('click', activePage);
 
 function activePage(e) {
-    if (e.target.classList.contains('pageLink')) {
+    if (e.target.classList.contains('deletePage')) {
 
         if (!(e.target.classList.contains('active'))) {
 
             let pageArr = Array.from(e.target.parentElement.children);
+
             pageArr.forEach((item) => {
                 if (item.classList.contains('active')) {
                     item.classList.remove('active');
                 }
             })
             e.target.classList.add('active');
+            addNewPage(e.target.children[0].innerHTML, e.target.children[0].id);
+        }
+    } else if (e.target.classList.contains('pageLink')) {
+
+        if (!(e.target.parentElement.classList.contains('active'))) {
+
+            let pageArr = Array.from(e.target.parentElement.parentElement.children);
+
+            pageArr.forEach((item) => {
+                if (item.classList.contains('active')) {
+                    item.classList.remove('active');
+                }
+            })
+            e.target.parentElement.classList.add('active');
             addNewPage(e.target.innerHTML, e.target.id);
         }
     }
@@ -286,7 +314,7 @@ function addCardToPage(e) {
 
     div3.innerHTML = document.querySelector('#note').value;
 
-    div5.innerHTML = '<i class="fa fa-minus"></i>';
+    div5.innerHTML = '<i class="far fa-trash-alt"></i>';
     div6.innerHTML = '<i class="far fa-edit"></i>';
     div7.innerHTML = '<i class="far fa-star"></i>';
 
@@ -321,8 +349,74 @@ function addCardToPage(e) {
 
 }
 
-
 // -------------- End add card function functions --------------
+
+// --------------------- Delete whole Page ------------------------------
+function fooClosePageModalDelete() {
+    document.querySelector('.deletePageModal').classList.remove("displayBlock");
+    document.querySelector('.deletePageModal').classList.add("displayNone");
+}
+
+document.querySelector('.sidebar').addEventListener('mouseover', (e) => {
+
+    if (e.target.classList.contains('deleteIcon')) {
+        let deletePageBtn = e.target
+
+        deletePageBtn.addEventListener('click', (e) => {
+            targetBtn = e.target
+
+            openDeletePageModal();
+
+            document.getElementById('deletePage').addEventListener('click', () => {
+                handle2(targetBtn)
+                fooClosePageModalDelete()
+            })
+
+            document.getElementById('takeMebackPage').addEventListener('click', () => {
+                fooClosePageModalDelete();
+            })
+
+            document.querySelector('#overlayDeletePage').addEventListener('click', closeDeletePageModal)
+
+        })
+    }
+
+})
+
+
+function handle2(targetBtn) {
+    try {
+
+        let pageDivName = targetBtn.previousElementSibling.innerHTML;
+
+        if (document.querySelector(`#${pageDivName}`).parentElement != null) {
+
+            let currentPageDiv = document.querySelector(`#${pageDivName}`).parentElement;
+
+            //removing the ul tag in the sidebar
+            currentPageDiv.remove()
+        }
+
+        //deleting the page title
+        if (document.querySelector('.head').innerHTML === pageDivName) {
+            document.querySelector('.head').innerHTML = ''
+        }
+
+        //removing the pageName from the page array
+        const index = allPageArr.indexOf(pageDivName)
+        if (index > -1) {
+            allPageArr.splice(index, 1);
+        }
+        console.log(allPageArr)
+
+        //deleting the page from the allPages 
+        targetBtn.parentElement.remove()
+
+    } catch {
+        targetBtn.removeEventListener('click', function() {})
+    }
+
+}
 
 
 // -------------- Update Note functions ---------------
@@ -462,7 +556,7 @@ function alertMsg(text) {
     }
 }
 
-// ------------------Download as pdf functions---------------------
+// --------------Download as pdf functions---------------------
 document.querySelector('.download').addEventListener('click', genPDF)
 document.querySelector('#overlaySaveFile').addEventListener('click', closeSaveFileModal)
 

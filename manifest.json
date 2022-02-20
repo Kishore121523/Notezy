@@ -3,7 +3,7 @@
     "version": "0.0.1",
     "manifest_version": 2,
     "background": {
-        "scripts": ["script/modalFunctions.js", "script/script.js"]
+        "scripts": ["script/modalFunctions.js", "script/script.js", "script/jspdf.min.js"]
     },
     "browser_action": {
         "default_popup": "index.html",
@@ -11,7 +11,7 @@
     },
     "content_scripts": [{
         "matches": ["*://*.mozilla.org/*"],
-        "js": ["script/modalFunctions.js", "script/script.js"]
+        "js": ["script/modalFunctions.js", "script/script.js", "script/jspdf.min.js"]
     }],
 
     "permissions": ["activeTab"]

@@ -62,22 +62,46 @@
     margin-left: -180px;
 }
 
-.sidebar a {
-    display: block;
-    color: rgb(160, 160, 160);
+.deletePage {
+    display: flex;
     padding: 16px;
+    color: rgb(160, 160, 160);
+    text-decoration: none;
+    transition: all 200ms ease;
+    cursor: pointer;
+    font-size: 0.7rem;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.deleteIcon {
+    align-self: flex-end;
+    padding-bottom: .7px;
+    color: rgb(160, 160, 160);
+    transition: all 200ms ease;
+}
+
+.pageLink {
+    color: rgb(160, 160, 160);
     text-decoration: none;
     transition: all 200ms ease;
     cursor: pointer;
     font-size: 0.9rem;
 }
 
-.sidebar a.active {
-    background-color: rgb(27, 27, 27);
+.deleteIcon:hover {
     color: var(--iconColor);
 }
 
-.sidebar a:hover:not(.active) {
+.deletePage.active {
+    background-color: rgb(27, 27, 27);
+}
+
+.deletePage.active>a {
+    color: var(--iconColor);
+}
+
+.deletePage:hover:not(.active) {
     background-color: #414141;
     color: var(--fontColor);
 }

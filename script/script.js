@@ -1,7 +1,7 @@
 // ------------------ Insructions Overlay ---------------------
+
 const intro = document.querySelector('.intro');
 const closeBtn = document.querySelector('.introClose').children[0];
-
 const infoBtn = document.querySelector('.info').children[1];
 
 infoBtn.addEventListener('click', () => {
@@ -30,6 +30,7 @@ closeBtn.addEventListener('click', function() {
 
 
 //---------------- SideBar Functions ----------------
+
 const hamburger = document.querySelector('.hamburger')
 const sideBar = document.querySelector('.sidebar')
 
@@ -55,14 +56,31 @@ document.querySelector("#overlaySideBar").addEventListener('click', (e) => {
 
 // Adding Pages to SideBar by Clicking Add Folder Button
 addFolderBtn = document.querySelector('.folder-add');
+
 addFolderBtn.addEventListener('click', addNewFolder);
 
 newFolder = document.querySelector('.newFold');
 newFolder.addEventListener('click', addNewFolder)
 
-let allPageArr = []
-let pageDivCount = 0;
-let pageCardCount = 0;
+// let allPageArr = []
+
+if (localStorage.getItem("allPageArrLocal") === null) {
+    allPageArrLocal = [];
+} else {
+    allPageArrLocal = JSON.parse(localStorage.getItem("allPageArrLocal"));
+}
+
+if (localStorage.getItem("pageDivCountLocal") === null) {
+    pageDivCountLocal = "0";
+} else {
+    pageDivCountLocal = localStorage.getItem("pageDivCountLocal");
+}
+
+if (localStorage.getItem("pageCardCountLocal") === null) {
+    pageCardCountLocal = "0";
+} else {
+    pageCardCountLocal = localStorage.getItem("pageCardCountLocal");
+}
 
 
 // Modal Open to add Name for the new page
@@ -73,19 +91,42 @@ function addNewFolder() {
 // Add the Name to side bar when add button is clicked
 let sidebarLinkID = 0;
 
+if (localStorage.getItem("sidebarLinkID") === null) {
+    sidebarLinkID = 0;
+} else {
+    sidebarLinkID = localStorage.getItem("sidebarLinkID");
+}
+
+
 const sideBarNoti = document.querySelector('.emptyNotification');
 
+// Modal button is clicked and first the sideBar is updated
 document.querySelector('.addFolderBtn').addEventListener('click', addToSideBar)
+
 
 function addToSideBar() {
 
     // Getting value from text field
     const nameOfFolder = document.querySelector('#nameFolder');
 
-    if (!allPageArr.includes(nameOfFolder.value)) {
+    let index = false;
+    console.log(allPageArrLocal)
+    console.log(index)
+
+    //removing the pageName from the page array
+    console.log(allPageArrLocal)
+    for (let i = 0; i < allPageArrLocal.length; i++) {
+        if (allPageArrLocal[i].nameOfPage == nameOfFolder.value) {
+            index = true;
+        }
+    }
+
+    console.log(index)
+
+    if (!index) {
 
         if (nameOfFolder.value === '') {
-            alertMsg("Name your Page")
+            alertMsg("Please Name your Page!")
             return
         }
 
@@ -117,11 +158,15 @@ function addToSideBar() {
             sideBarNoti.style.display = 'block'
         }
 
+        // adding active animation to the sidebar pages
         checkActive(sidebarLinkID);
+
+        // adding the page to the main dom
         addNewPage(nameOfFolder.value, sidebarLinkID);
 
         nameOfFolder.value = "";
         sidebarLinkID++;
+        localStorage.setItem('sidebarLinkID', sidebarLinkID)
 
     } else {
         alertMsg("You have added another page with same name!")
@@ -133,9 +178,14 @@ function addToSideBar() {
     document.querySelector('.openFolderModal').classList.add("displayNone");
 }
 
+// Add active class when first added to sidebar 
 function checkActive(linkId) {
+
+    linkId = parseInt(linkId)
+
     document.querySelectorAll('.pageLink').forEach((element) => {
         let idEle = parseInt(element.id)
+
         if (idEle === linkId) {
             element.parentElement.classList.add('active')
         } else {
@@ -150,10 +200,13 @@ function checkActive(linkId) {
 // Close modal on out of focus
 document.querySelector('#overlayFolder').addEventListener('click', closeFolderModal)
 
-// Add animation for active page Link
+// Add active classes when links in sideBar are clicked after added
 document.querySelector('.sidebar').addEventListener('click', activePage);
 
 function activePage(e) {
+
+    // setting link as active when deletePageDiv is clicked or directly the link(a) is clicked
+
     if (e.target.classList.contains('deletePage')) {
 
         if (!(e.target.classList.contains('active'))) {
@@ -165,9 +218,13 @@ function activePage(e) {
                     item.classList.remove('active');
                 }
             })
+
             e.target.classList.add('active');
+
+            // addNewPage(nameOfPage,idNumberOfPage)
             addNewPage(e.target.children[0].innerHTML, e.target.children[0].id);
         }
+
     } else if (e.target.classList.contains('pageLink')) {
 
         if (!(e.target.parentElement.classList.contains('active'))) {
@@ -180,6 +237,8 @@ function activePage(e) {
                 }
             })
             e.target.parentElement.classList.add('active');
+
+            // addNewPage(nameOfPage,idNumberOfPage)
             addNewPage(e.target.innerHTML, e.target.id);
         }
     }
@@ -188,13 +247,26 @@ function activePage(e) {
 // Adding new page to the sidebar
 function addNewPage(nameOfPage, id) {
 
+    // selecting the allPages div
     const allPages = document.querySelector('.allPages');
 
-    //Create a new ul for every new page
-    if (!(allPageArr.includes(nameOfPage))) {
+    // Create a new ul for every new page (with checking the name of page is already present in the allPageArr)
+    let index = false;
+
+    //removing the pageName from the page array
+    for (let i = 0; i < allPageArrLocal.length; i++) {
+        if (allPageArrLocal[i].nameOfPage == nameOfPage) {
+            index = true;
+        }
+    }
+
+    if (!index) {
+
+        // setting the head element with the nameOfPage
         document.querySelector('.head').innerHTML = nameOfPage;
+
         const outerDiv = document.createElement('div');
-        outerDiv.setAttribute('id', pageDivCount);
+        outerDiv.setAttribute('id', pageDivCountLocal);
 
         const ul = document.createElement('ul');
         ul.className = 'cards';
@@ -202,7 +274,7 @@ function addNewPage(nameOfPage, id) {
 
         const divBtn = document.createElement('div');
         divBtn.className = 'addBtnDiv';
-        divBtn.setAttribute('id', 'btn-' + pageDivCount);
+        divBtn.setAttribute('id', 'btn-' + pageDivCountLocal);
 
         const addButton = document.createElement('button');
         addButton.innerHTML = 'Add a Note';
@@ -213,14 +285,17 @@ function addNewPage(nameOfPage, id) {
         ul.appendChild(divBtn);
         outerDiv.appendChild(ul);
         allPages.appendChild(outerDiv);
-        pageDivCount++;
-        console.log(pageDivCount)
 
-        allPageArr.push(nameOfPage)
-        console.log(allPageArr)
+        allPageArrLocal.push({ nameOfPage: nameOfPage, id: pageDivCountLocal })
+        localStorage.setItem("allPageArrLocal", JSON.stringify(allPageArrLocal));
+
+        pageDivCountLocal++;
+        localStorage.setItem('pageDivCountLocal', pageDivCountLocal)
+        console.log(allPageArrLocal)
 
     }
 
+    // if the page is already present
     let allCards = document.querySelectorAll('.cards');
 
     allCards.forEach((currentPage) => {
@@ -234,29 +309,41 @@ function addNewPage(nameOfPage, id) {
         }
     })
 
-    document.querySelector('#btn-' + id).children[0].addEventListener('click', newHandle0);
+    try {
+        document.querySelector('#btn-' + id).children[0].addEventListener('click', newHandle0);
+    } catch {
+        return
+    }
+
 }
 
 var newHandle0 = function(e) {
+
     let currDiv = e.target.parentElement.parentElement.parentElement;
     let btnId = e.currentTarget.parentElement.id;
+
     addBtnFunc(btnId.charAt(btnId.length - 1), currDiv.id, currDiv.children[0].id);
+
 }
 
 // Close modal on out of focus
 document.querySelector('.modal').addEventListener('click', closeModal)
 
 function addBtnFunc(currBtnId, currDivId, nameOfUl) {
+
     openModal();
     document.querySelector('.modal').focus()
     document.querySelector('#tagline').focus()
 
     if (currBtnId === currDivId) {
+
         document.querySelector('.modalBtn').btnParam = nameOfUl
         document.querySelector('.modalBtn').addEventListener('click', addCardToPage);
+
     }
 
 }
+
 
 // Adding card to a page
 function addCardToPage(e) {
@@ -272,7 +359,7 @@ function addCardToPage(e) {
 
     const li = document.createElement('li');
     li.className = 'card';
-    li.setAttribute('id', 'card-' + pageCardCount);
+    li.setAttribute('id', 'card-' + pageCardCountLocal);
 
     const cardTitle = document.createElement('div');
     cardTitle.className = 'card-title';
@@ -336,22 +423,40 @@ function addCardToPage(e) {
         div4.classList.add('card-options-big')
     }
 
-    document.querySelector('#note').value = ""
-    document.querySelector('#tagline').value = ""
-    pageCardCount++;
-    console.log(pageCardCount)
-
     let idNum = document.getElementById(e.currentTarget.btnParam).parentElement.id;
 
     let buttons = document.querySelector("#btn-" + idNum)
 
     document.getElementById(e.currentTarget.btnParam).insertBefore(li, buttons);
 
+    storeTaskInLocalStorage(document.querySelector('#tagline').value, document.querySelector('#note').value, idNum, pageCardCountLocal);
+
+    document.querySelector('#note').value = ""
+    document.querySelector('#tagline').value = ""
+    pageCardCountLocal++;
+    localStorage.setItem('pageCardCountLocal', pageCardCountLocal)
+}
+
+function storeTaskInLocalStorage(title, content, currentPageId, pageCardCountLocal) {
+
+    let fullPageCardArrayLocal;
+
+    if (localStorage.getItem("page" + currentPageId.toString()) === null) {
+        fullPageCardArrayLocal = [];
+    } else {
+        fullPageCardArrayLocal = JSON.parse(localStorage.getItem("page" + currentPageId.toString()));
+    }
+
+    fullPageCardArrayLocal.push({ title: title, content: content, id: pageCardCountLocal.toString() });
+
+    localStorage.setItem("page" + currentPageId.toString(), JSON.stringify(fullPageCardArrayLocal));
 }
 
 // -------------- End add card function functions --------------
 
+
 // --------------------- Delete whole Page ------------------------------
+
 function fooClosePageModalDelete() {
     document.querySelector('.deletePageModal').classList.remove("displayBlock");
     document.querySelector('.deletePageModal').classList.add("displayNone");
@@ -383,18 +488,17 @@ document.querySelector('.sidebar').addEventListener('mouseover', (e) => {
 
 })
 
-
 function handle2(targetBtn) {
     try {
 
         let pageDivName = targetBtn.previousElementSibling.innerHTML;
+        let pageDivNameId = targetBtn.previousElementSibling.id;
 
         if (document.querySelector(`#${pageDivName}`).parentElement != null) {
-
-            let currentPageDiv = document.querySelector(`#${pageDivName}`).parentElement;
+            let currentPageDivUlSideBar = document.querySelector(`#${pageDivName}`).parentElement;
 
             //removing the ul tag in the sidebar
-            currentPageDiv.remove()
+            currentPageDivUlSideBar.remove()
         }
 
         //deleting the page title
@@ -402,15 +506,26 @@ function handle2(targetBtn) {
             document.querySelector('.head').innerHTML = ''
         }
 
+        let index = -1;
         //removing the pageName from the page array
-        const index = allPageArr.indexOf(pageDivName)
-        if (index > -1) {
-            allPageArr.splice(index, 1);
+        for (let i = 0; i < allPageArrLocal.length; i++) {
+            if (allPageArrLocal[i].nameOfPage == pageDivName) {
+                index = i;
+            }
         }
-        console.log(allPageArr)
+        if (index > -1) {
+
+            // allPageArr.splice(index, 1);
+            allPageArrLocal.splice(index, 1)
+            localStorage.setItem("allPageArrLocal", JSON.stringify(allPageArrLocal));
+
+        }
 
         //deleting the page from the allPages 
         targetBtn.parentElement.remove()
+
+        //removing the notes of current page when whole page is deleted
+        localStorage.removeItem("page" + pageDivNameId.toString())
 
     } catch {
         targetBtn.removeEventListener('click', function() {})
@@ -420,6 +535,7 @@ function handle2(targetBtn) {
 
 
 // -------------- Update Note functions ---------------
+
 document.querySelector(".allPages").addEventListener('mouseover', (e) => {
 
     if (e.target.parentElement.classList.contains("card-update")) {
@@ -438,8 +554,7 @@ function updateNote(e) {
 
     // CHECK IF THE CURRENT CLICKED ELEMENTS PARENT HAS A CLASS OF CARD-UPDATE
     if (e.target.parentElement.classList.contains("card-update")) {
-        console.log('asd')
-            // STORING CLICKED CARD'S ID
+        // STORING CLICKED CARD'S ID
         const currentId = e.target.parentElement.parentElement.parentElement.parentElement.getAttribute("id")
 
         // GETTING CLICKED CARD'S TITLE AND NOTE
@@ -452,7 +567,6 @@ function updateNote(e) {
         // GETTING VALUE FROM FIELDS OF OPENED MODAL
         const tagline = document.querySelector('#taglineUpd');
         const notes = document.querySelector('#noteUpd');
-
 
         // SETTING THE VALUE OF CLICKED CARD'S FIELD TO MODAL FIELD
         tagline.value = title.innerHTML;
@@ -468,6 +582,7 @@ function updateNote(e) {
             modalBtnUpd.myParam = currentId;
         }
 
+
         e.preventDefault();
     }
 }
@@ -476,6 +591,8 @@ function updateField(e) {
 
     // GETTING MYPARAM OF CLIKED CARD
     let thisCounts = e.currentTarget.myParam
+
+    let thisPageId = document.getElementById(thisCounts).parentElement.parentElement.id
 
     // TO GET CURRENT CARD-TITLE AND CARD-CONTENT
     thisTitle = document.getElementById(thisCounts).childNodes[0]
@@ -493,7 +610,8 @@ function updateField(e) {
     thisTitle.innerHTML = tagline.value;
     thisNote.innerHTML = notes.value;
 
-    // TO GET CURRENT CARD-OPTIONS
+    storeUpdatedNote(tagline.value, notes.value, thisPageId, parseInt(thisCounts.charAt(thisCounts.length - 1)))
+        // TO GET CURRENT CARD-OPTIONS
     let cardOpt = document.getElementById(thisCounts).childNodes[1].childNodes[1];
 
     // TO SET THE FLEX DIRECTION ON CURRENT CARD-OPTIONS
@@ -511,10 +629,29 @@ function updateField(e) {
 
     e.preventDefault();
 }
+
+function storeUpdatedNote(title, content, currentPageId, currentCardIdNum) {
+    let fullPageCardArrayLocal;
+
+    if (localStorage.getItem("page" + currentPageId.toString()) === null) {
+        fullPageCardArrayLocal = [];
+    } else {
+        fullPageCardArrayLocal = JSON.parse(localStorage.getItem("page" + currentPageId.toString()))
+        for (let i = 0; i < fullPageCardArrayLocal.length; i++) {
+            if (fullPageCardArrayLocal[i].id == currentCardIdNum) {
+                fullPageCardArrayLocal[i].title = title
+                fullPageCardArrayLocal[i].content = content
+            }
+        }
+    }
+
+    localStorage.setItem("page" + currentPageId.toString(), JSON.stringify(fullPageCardArrayLocal));
+}
 // --------------- Update Note Function End--------------
 
 
 // ------------ Removing a Note -------------------
+
 function fooCloseModalDelete() {
     document.querySelector('.deleteModal').classList.remove("displayBlock");
     document.querySelector('.deleteModal').classList.add("displayNone");
@@ -522,13 +659,39 @@ function fooCloseModalDelete() {
 
 
 function removeNote(e) {
+
     if (e.target.parentElement.classList.contains("card-delete")) {
 
         openDeleteModal();
 
         document.getElementById('deleteCard').addEventListener('click', () => {
-            e.target.parentElement.parentElement.parentElement.parentElement.remove();
-            fooCloseModalDelete()
+            try {
+
+                //local Storage delete card
+                titleToDelete = e.target.parentElement.parentElement.parentElement.parentElement.children[0].innerHTML
+                contentTODelete = e.target.parentElement.parentElement.parentElement.children[0].innerHTML
+                id = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id
+
+                //page0,page1 etc array is selected using the id attribute
+                if (localStorage.getItem("page" + id.toString()) === null) {
+                    fullPageCardArrayLocal = [];
+                } else {
+                    fullPageCardArrayLocal = JSON.parse(localStorage.getItem("page" + id.toString()))
+
+                    fullPageCardArrayLocal.forEach((eachCard, index) => {
+                        if (eachCard.title == titleToDelete.toString() && eachCard.content == contentTODelete.toString()) {
+                            fullPageCardArrayLocal.splice(index, 1)
+                        }
+                    })
+                    localStorage.setItem("page" + id.toString(), JSON.stringify(fullPageCardArrayLocal));
+                }
+                localStorage.setItem("page" + id.toString(), JSON.stringify(fullPageCardArrayLocal));
+                e.target.parentElement.parentElement.parentElement.parentElement.remove();
+                fooCloseModalDelete()
+            } catch {
+                return
+            }
+
         })
 
         document.getElementById('takeMeback').addEventListener('click', () => {
@@ -537,6 +700,9 @@ function removeNote(e) {
         document.querySelector('#overlayDelete').addEventListener('click', closeDeleteModal)
 
     }
+
+
+
 }
 
 
@@ -556,13 +722,15 @@ function alertMsg(text) {
     }
 }
 
+
 // --------------Download as pdf functions---------------------
+
 document.querySelector('.download').addEventListener('click', genPDF)
 document.querySelector('#overlaySaveFile').addEventListener('click', closeSaveFileModal)
 
 function genPDF(e) {
 
-    let parentDivChildrenArray = e.target.parentElement.parentElement.parentElement.parentElement.children
+    let parentDivChildrenArray = e.target.parentElement.parentElement.parentElement.parentElement.nextElementSibling.children
 
     allTitleArr = []
     allContentArr = []
@@ -575,6 +743,7 @@ function genPDF(e) {
     var startX = pageMargin;
     var startY = pageMargin;
 
+    console.log(parentDivChildrenArray)
 
     Array.from(parentDivChildrenArray).forEach((element) => {
 
@@ -649,6 +818,7 @@ function setFileName(e) {
 
 
 // ---------------Tooltip toggler functions-----------------------
+
 let toggler = document.querySelector('.toggler');
 let allNodes = document.querySelectorAll('.tooltip');
 
@@ -691,6 +861,11 @@ document.querySelector('.themeSwitch').addEventListener('click', changeThemeNumb
 window.addEventListener('load', changeTheme)
 
 // window.localStorage.setItem('i', '0');
+if (localStorage.getItem("i") === null) {
+    localStorage.setItem('i', '0')
+} else {
+    i = localStorage.getItem("i");
+}
 
 function changeThemeNumber() {
     i = parseInt(window.localStorage.getItem('i'))
@@ -741,4 +916,215 @@ function changeTheme() {
         localStorage.setItem('theme', theme);
         document.body.setAttribute('data-theme', window.localStorage.getItem('theme'))
     }
+}
+
+// Filter tasks.
+filterField = document.querySelector('.filter');
+filterField.addEventListener('keyup', filterTasks);
+
+function filterTasks(e) {
+    const text = e.target.value.toLowerCase();
+
+    document.querySelectorAll('.cards').forEach((eachCard) => {
+        if (eachCard.parentElement.classList.contains("displayBlockPure")) {
+            document.querySelectorAll(".card").forEach(function(cardInner) {
+
+                const item = cardInner.firstChild.textContent;
+                if (item.toLowerCase().indexOf(text) != -1) {
+                    cardInner.style.display = "block";
+                } else {
+                    cardInner.style.display = "none";
+                }
+
+            });
+        }
+
+    })
+
+}
+
+
+
+
+// -----------------------------------------------------------------------------------
+document.addEventListener("DOMContentLoaded", getTasks);
+
+function getTasks() {
+    let allPageArrLocal;
+
+    if (localStorage.getItem("allPageArrLocal") === null) {
+        allPageArrLocal = [];
+    } else {
+        allPageArrLocal = JSON.parse(localStorage.getItem("allPageArrLocal"));
+    }
+
+    let pageDivCountLocal;
+    if (localStorage.getItem("pageDivCountLocal") === null) {
+        pageDivCountLocal = -1;
+    } else {
+        pageDivCountLocal = localStorage.getItem("pageDivCountLocal");
+    }
+
+    //sideBar functions
+    allPageArrLocal.forEach((elem) => {
+
+        const linkDiv = document.createElement('div');
+        const deleteIcon = document.createElement('i')
+        const a = document.createElement('a');
+
+        deleteIcon.classList.add('far')
+        deleteIcon.classList.add('fa-trash-alt')
+
+        linkDiv.classList.add('deletePage');
+        deleteIcon.classList.add('deleteIcon')
+
+        a.setAttribute('id', elem.id)
+        a.className = 'pageLink'
+        a.innerHTML = elem.nameOfPage;
+
+        linkDiv.appendChild(a)
+        linkDiv.appendChild(deleteIcon)
+
+        document.querySelector('.sidebar').appendChild(linkDiv);
+
+        // Check for atleast one anchor tag is present
+        var hasChildDiv = document.querySelector(".sidebar").querySelector("a");
+
+        if (hasChildDiv != null) {
+            sideBarNoti.style.display = 'none'
+        } else {
+            sideBarNoti.style.display = 'block'
+        }
+
+        checkActive(elem.id);
+
+        // adding the page to the main dom
+        addNewPage(elem.nameOfPage, elem.id);
+
+    })
+
+    // creating a div for the pages
+    const allPages = document.querySelector('.allPages');
+
+    allPageArrLocal.forEach((curr) => {
+
+        const outerDiv = document.createElement('div');
+        outerDiv.setAttribute('id', curr.id);
+
+        const ul = document.createElement('ul');
+        ul.className = 'cards';
+        ul.setAttribute('id', curr.nameOfPage);
+
+        const divBtn = document.createElement('div');
+        divBtn.className = 'addBtnDiv';
+        divBtn.setAttribute('id', 'btn-' + curr.id);
+
+        const addButton = document.createElement('button');
+        addButton.innerHTML = 'Add a Note';
+        addButton.classList = 'addBtn';
+
+        divBtn.appendChild(addButton);
+
+        ul.appendChild(divBtn);
+        outerDiv.appendChild(ul);
+        allPages.appendChild(outerDiv);
+        let allCards = document.querySelectorAll('.cards');
+
+        allCards.forEach((currentPage) => {
+            if (!(currentPage.id === curr.nameOfPage)) {
+                currentPage.parentElement.classList.remove('displayBlockPure')
+                currentPage.parentElement.classList.add('displayNonePure')
+            } else {
+                currentPage.parentElement.classList.remove('displayNonePure')
+                currentPage.parentElement.classList.add('displayBlockPure')
+                document.querySelector('.head').innerHTML = curr.nameOfPage;
+            }
+
+
+            document.querySelector('#btn-' + parseInt(curr.id)).children[0].addEventListener('click', newHandle0);
+        })
+
+        if (localStorage.getItem("page" + curr.id.toString()) === null) {
+            currentPageContentArr = [];
+        } else {
+            currentPageContentArr = JSON.parse(localStorage.getItem("page" + curr.id.toString()));
+        }
+
+        currentPageContentArr.forEach((currentElement) => {
+            const li = document.createElement('li');
+            li.className = 'card';
+            li.setAttribute('id', 'card-' + currentElement.id);
+
+            const cardTitle = document.createElement('div');
+            cardTitle.className = 'card-title';
+
+            const div1 = document.createElement('div');
+            div1.className = 'card-inner';
+
+            const div3 = document.createElement('div');
+            div3.className = 'card-content';
+
+            const div4 = document.createElement('div');
+            div4.className = 'card-options';
+
+            const div5 = document.createElement('div');
+            div5.className = 'card-delete';
+            div5.classList.add('tooltip')
+
+            const deleteToolTip = document.createElement('div');
+            deleteToolTip.className = 'bottomPinToTop'
+            deleteToolTip.innerHTML = "Delete Note"
+
+            const div6 = document.createElement('div');
+            div6.className = 'card-update';
+            div6.classList.add('tooltip')
+
+            const updateToolTip = document.createElement('div');
+            updateToolTip.className = 'bottomPinToTop'
+            updateToolTip.innerHTML = "Update Note"
+
+            const div7 = document.createElement('div');
+            div7.className = 'card-fav';
+            div7.classList.add('tooltip')
+
+            const pinToTopToolTip = document.createElement('div');
+            pinToTopToolTip.className = 'bottomPinToTop'
+            pinToTopToolTip.innerHTML = "Pin to Top"
+
+            cardTitle.innerHTML = currentElement.title
+
+            div3.innerHTML = currentElement.content
+
+            div5.innerHTML = '<i class="far fa-trash-alt"></i>';
+            div6.innerHTML = '<i class="far fa-edit"></i>';
+            div7.innerHTML = '<i class="far fa-star"></i>';
+
+            li.appendChild(cardTitle)
+            li.appendChild(div1);
+            div1.appendChild(div3);
+            div1.appendChild(div4);
+            div4.appendChild(div6);
+            div6.appendChild(updateToolTip);
+            div4.appendChild(div7);
+            div7.appendChild(pinToTopToolTip)
+            div4.appendChild(div5);
+            div5.appendChild(deleteToolTip)
+
+
+            if (currentElement.content.length > 50) {
+                div4.classList.remove('card-options')
+                div4.classList.add('card-options-big')
+            }
+
+            let idNum = curr.id;
+
+            let buttons = document.querySelector("#btn-" + idNum)
+
+            document.getElementById(curr.nameOfPage).insertBefore(li, buttons);
+
+        })
+    })
+
+
+
 }

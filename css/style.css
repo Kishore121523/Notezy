@@ -289,7 +289,7 @@ body {
 }
 
 .cards {
-    margin: 0px;
+    margin-top: 4rem;
     list-style-type: none;
     display: flex;
     flex-direction: column;

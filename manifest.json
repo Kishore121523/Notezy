@@ -1,13 +1,19 @@
 {
     "name": "Notezy",
     "version": "0.0.1",
+    "description": "Modern Note Taking Extension which let's you organize your notes into folders, update it, delete it and what not! It lets you download your notes as pdf. Add it to your chrome now! ",
     "manifest_version": 2,
+    "icons": {
+        "16": "16.png",
+        "48": "48.png",
+        "128": "128.png"
+    },
     "background": {
         "scripts": ["script/modalFunctions.js", "script/script.js", "script/jspdf.min.js"]
     },
     "browser_action": {
         "default_popup": "index.html",
-        "default_icon": "logo.png"
+        "default_icon": "16.png"
     },
     "content_scripts": [{
         "matches": ["*://*.mozilla.org/*"],

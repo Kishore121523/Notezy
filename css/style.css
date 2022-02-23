@@ -309,7 +309,8 @@ body {
     box-shadow: 2px 5px 10px rgb(18, 18, 18, 0.3);
 }
 
-.card-title {
+.card-title,
+.card-title-fav {
     text-align: center;
     width: 100%;
     word-break: break-all;
@@ -321,7 +322,15 @@ body {
     font-size: 1rem;
     border-radius: 5px 5px 0px 0px;
     background-color: rgb(18, 18, 18, 0.8);
+    border: 1px solid rgb(18, 18, 18, 0.8);
     color: var(--iconColor);
+    transition: all 300ms ease;
+}
+
+.card-title-fav {
+    background-color: rgb(18, 18, 18, 0.8);
+    color: var(--iconColor);
+    border: 1px solid var(--iconColor);
 }
 
 .card-inner {
@@ -384,6 +393,13 @@ body {
 
 .card-fav {
     cursor: pointer;
+    color: var(--iconColor);
+    transition: all 300ms ease;
+}
+
+.card-fav-icon {
+    cursor: pointer;
+    color: var(--fontColor);
 }
 
 

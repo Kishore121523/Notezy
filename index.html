@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-    <!-- <script src="https://kit.fontawesome.com/69c7c040d1.js" crossorigin="anonymous"></script> -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
     <link rel="stylesheet" href="./css/tooltip.css">
     <link rel="stylesheet" href="./css/sideBar.css">
     <link rel="stylesheet" href="./css/style.css">
@@ -27,10 +27,10 @@
             </div>
             <div class="heroInstructions">
                 <ul class="instructionUl">
-                    <li class="instruction">- Quick and Easy way to take notes</li>
                     <li class="instruction">- Click on the + button to get started</li>
-                    <li class="instruction">- Organise your notes into seperate folders</li>
-                    <li class="instruction">- Click on the hamburger to access the pages</li>
+                    <li class="instruction">- Organise your notes into seperate pages</li>
+                    <li class="instruction">- Navigate between pages quickly</li>
+                    <li class="instruction">- Save, Delete, Update and Highlight your notes</li>
                 </ul>
             </div>
 
@@ -47,10 +47,7 @@
         <!-- The sidebar -->
         <div id="overlaySideBar" class="displayNone">
             <div class="sidebar sideBarClosed">
-                <!-- <div class="deletePage active">
-                    <a href="#" class="pageLink">sdsdd</a>
-                    <i class="far fa-trash-alt deleteIcon"></i>
-                </div> -->
+                <!-- SideBar Page Names are added here -->
                 <p class="emptyNotification">Click the <span class="plusText highlightText">+</span> button to add a
                     <span class="highlightText newFold"> New Folder</span>
                 </p>
@@ -61,7 +58,7 @@
             <div class="hamburger"><i class="fas fa-bars"></i></div>
             <div class="head"></div>
             <div class="info tooltip">
-                <div class="bottom">Instructions <i></i></div>
+                <div class="bottom">Notezy<i></i></div>
                 <i class="fas fa-info-circle"></i>
             </div>
             <div class="folder-add tooltip">
@@ -72,7 +69,7 @@
         <div class="pageFunctions">
 
             <div class="filterNotes">
-                <input type="text" class="filter" placeholder="Filter Notes">
+                <input type="text" class="filter" placeholder="Filter by Title">
             </div>
 
             <div class="dropdown">
@@ -101,28 +98,7 @@
 
         <div class="allPages">
 
-            <!-- <div id="0" class="displayBlockPure">
-                <ul class="cards" id="dsds">
-                    <li class="card" id="card-0">
-                        <div class="card-title">sdsd</div>
-                        <div class="card-inner">
-                            <div class="card-content">dsd</div>
-                            <div class="card-options">
-                                <div class="card-update tooltip"><i class="far fa-edit"></i>
-                                    <div class="bottomPinToTop">Update Note</div>
-                                </div>
-                                <div class="card-fav tooltip"><i class="far fa-star"></i>
-                                    <div class="bottomPinToTop">Pin to Top</div>
-                                </div>
-                                <div class="card-delete tooltip"><i class="far fa-trash-alt"></i>
-                                    <div class="bottomPinToTop">Delete Note</div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <div class="addBtnDiv" id="btn-0"><button class="addBtn">Add a Note</button></div>
-                </ul>
-            </div> -->
+            <!-- Note Pages are added here -->
 
         </div>
 

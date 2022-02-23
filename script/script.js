@@ -62,8 +62,6 @@ addFolderBtn.addEventListener('click', addNewFolder);
 newFolder = document.querySelector('.newFold');
 newFolder.addEventListener('click', addNewFolder)
 
-// let allPageArr = []
-
 if (localStorage.getItem("allPageArrLocal") === null) {
     allPageArrLocal = [];
 } else {
@@ -81,6 +79,8 @@ if (localStorage.getItem("pageCardCountLocal") === null) {
 } else {
     pageCardCountLocal = localStorage.getItem("pageCardCountLocal");
 }
+
+
 
 
 // Modal Open to add Name for the new page
@@ -110,18 +110,13 @@ function addToSideBar() {
     const nameOfFolder = document.querySelector('#nameFolder');
 
     let index = false;
-    console.log(allPageArrLocal)
-    console.log(index)
 
     //removing the pageName from the page array
-    console.log(allPageArrLocal)
     for (let i = 0; i < allPageArrLocal.length; i++) {
         if (allPageArrLocal[i].nameOfPage == nameOfFolder.value) {
             index = true;
         }
     }
-
-    console.log(index)
 
     if (!index) {
 
@@ -291,7 +286,6 @@ function addNewPage(nameOfPage, id) {
 
         pageDivCountLocal++;
         localStorage.setItem('pageDivCountLocal', pageDivCountLocal)
-        console.log(allPageArrLocal)
 
     }
 
@@ -390,13 +384,12 @@ function addCardToPage(e) {
     updateToolTip.innerHTML = "Update Note"
 
     const div7 = document.createElement('div');
-    div7.className = 'card-fav';
+    div7.classList.add('card-fav')
     div7.classList.add('tooltip')
 
     const pinToTopToolTip = document.createElement('div');
     pinToTopToolTip.className = 'bottomPinToTop'
-    pinToTopToolTip.innerHTML = "Pin to Top"
-
+    pinToTopToolTip.innerHTML = "Mark/Unmark"
     cardTitle.innerHTML = document.querySelector('#tagline').value
 
     div3.innerHTML = document.querySelector('#note').value;
@@ -447,7 +440,7 @@ function storeTaskInLocalStorage(title, content, currentPageId, pageCardCountLoc
         fullPageCardArrayLocal = JSON.parse(localStorage.getItem("page" + currentPageId.toString()));
     }
 
-    fullPageCardArrayLocal.push({ title: title, content: content, id: pageCardCountLocal.toString() });
+    fullPageCardArrayLocal.push({ title: title, content: content, id: pageCardCountLocal.toString(), favClicked: "0", cardStyle: "card-title", cardStyle1: "card-fav" });
 
     localStorage.setItem("page" + currentPageId.toString(), JSON.stringify(fullPageCardArrayLocal));
 }
@@ -544,6 +537,10 @@ document.querySelector(".allPages").addEventListener('mouseover', (e) => {
     if (e.target.parentElement.classList.contains("card-delete")) {
         e.target.parentElement.parentElement.parentElement.parentElement.parentElement.addEventListener('click', removeNote)
     }
+    if (e.target.parentElement.classList.contains("card-fav") || e.target.parentElement.classList.contains("card-fav-icon")) {
+        e.target.parentElement.parentElement.parentElement.parentElement.parentElement.addEventListener('click', addFavNote)
+    }
+
 
 })
 
@@ -650,8 +647,95 @@ function storeUpdatedNote(title, content, currentPageId, currentCardIdNum) {
 // --------------- Update Note Function End--------------
 
 
-// ------------ Removing a Note -------------------
+//---------Adding note as fav-------------
+function addFavNote(e) {
 
+    if (e.target.parentElement.classList.contains("card-fav") || e.target.parentElement.classList.contains("card-fav-icon")) {
+
+        let currentPageId = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id
+        let currentNoteIdFavListElement = e.target.parentElement.parentElement.parentElement.parentElement
+        let currentNoteIdFavListElementFullId = currentNoteIdFavListElement.id
+        let currentCardIdFavNumber = currentNoteIdFavListElementFullId.charAt(currentNoteIdFavListElementFullId.length - 1)
+
+        let fullPageCardArrayLocal;
+
+        if (localStorage.getItem("page" + currentPageId) === null) {
+            fullPageCardArrayLocal = [];
+        } else {
+            fullPageCardArrayLocal = JSON.parse(localStorage.getItem("page" + currentPageId));
+        }
+
+        for (let i = 0; i < fullPageCardArrayLocal.length; i++) {
+
+            if (fullPageCardArrayLocal[i].id == currentCardIdFavNumber) {
+
+                clicked = parseInt(fullPageCardArrayLocal[i].favClicked)
+                console.log(clicked)
+
+                if (clicked % 2 == 0) {
+
+                    let addfavNoteStyle = fullPageCardArrayLocal[i].cardStyle
+                    let iconStyle = fullPageCardArrayLocal[i].cardStyle1
+
+                    console.log(iconStyle)
+
+                    if (currentNoteIdFavListElement.children[0].classList.contains(addfavNoteStyle)) {
+
+                        clicked++;
+                        fullPageCardArrayLocal[i].favClicked = clicked
+
+                        currentNoteIdFavListElement.children[0].classList.remove(addfavNoteStyle)
+                        currentNoteIdFavListElement.children[1].children[1].children[1].classList.remove(iconStyle)
+
+                        fullPageCardArrayLocal[i].cardStyle = "card-title-fav"
+                        fullPageCardArrayLocal[i].cardStyle1 = "card-fav-icon"
+
+                        addfavNoteStyle = fullPageCardArrayLocal[i].cardStyle
+                        iconStyle = fullPageCardArrayLocal[i].cardStyle1
+
+                        currentNoteIdFavListElement.children[0].classList.add(addfavNoteStyle)
+                        currentNoteIdFavListElement.children[1].children[1].children[1].classList.add(iconStyle)
+
+                    }
+
+                } else {
+
+                    let addfavNoteStyle = fullPageCardArrayLocal[i].cardStyle
+                    let iconStyle = fullPageCardArrayLocal[i].cardStyle1
+
+                    console.log(iconStyle)
+
+                    if (currentNoteIdFavListElement.children[0].classList.contains(addfavNoteStyle)) {
+
+                        clicked++;
+                        fullPageCardArrayLocal[i].favClicked = clicked
+
+                        currentNoteIdFavListElement.children[0].classList.remove(addfavNoteStyle)
+                        currentNoteIdFavListElement.children[1].children[1].children[1].classList.remove(iconStyle)
+
+                        fullPageCardArrayLocal[i].cardStyle = "card-title"
+                        fullPageCardArrayLocal[i].cardStyle1 = "card-fav"
+
+
+                        addfavNoteStyle = fullPageCardArrayLocal[i].cardStyle
+                        iconStyle = fullPageCardArrayLocal[i].cardStyle1
+
+                        currentNoteIdFavListElement.children[0].classList.add(addfavNoteStyle)
+                        currentNoteIdFavListElement.children[1].children[1].children[1].classList.add(iconStyle)
+
+                    }
+
+                }
+
+                localStorage.setItem("page" + currentPageId, JSON.stringify(fullPageCardArrayLocal));
+            }
+        }
+
+    }
+}
+
+
+// ------------ Removing a Note -------------------
 function fooCloseModalDelete() {
     document.querySelector('.deleteModal').classList.remove("displayBlock");
     document.querySelector('.deleteModal').classList.add("displayNone");
@@ -701,13 +785,10 @@ function removeNote(e) {
 
     }
 
-
-
 }
 
 
 // --------- Alert Message in case of error ---------
-
 function alertMsg(text) {
     document.querySelector('.alertModal').classList.remove("displayNone");
     document.querySelector('.alertModal').classList.add("displayBlock");
@@ -724,7 +805,6 @@ function alertMsg(text) {
 
 
 // --------------Download as pdf functions---------------------
-
 document.querySelector('.download').addEventListener('click', genPDF)
 document.querySelector('#overlaySaveFile').addEventListener('click', closeSaveFileModal)
 
@@ -818,7 +898,6 @@ function setFileName(e) {
 
 
 // ---------------Tooltip toggler functions-----------------------
-
 let toggler = document.querySelector('.toggler');
 let allNodes = document.querySelectorAll('.tooltip');
 
@@ -856,7 +935,6 @@ toggler.addEventListener('click', () => {
 
 
 // change theme and save styles to local storage
-
 document.querySelector('.themeSwitch').addEventListener('click', changeThemeNumber)
 window.addEventListener('load', changeTheme)
 
@@ -943,10 +1021,7 @@ function filterTasks(e) {
 
 }
 
-
-
-
-// -----------------------------------------------------------------------------------
+// --------------------------------------Local Storage Functions---------------------------------------------
 document.addEventListener("DOMContentLoaded", getTasks);
 
 function getTasks() {
@@ -1056,7 +1131,7 @@ function getTasks() {
             li.setAttribute('id', 'card-' + currentElement.id);
 
             const cardTitle = document.createElement('div');
-            cardTitle.className = 'card-title';
+            cardTitle.className = currentElement.cardStyle
 
             const div1 = document.createElement('div');
             div1.className = 'card-inner';
@@ -1084,12 +1159,12 @@ function getTasks() {
             updateToolTip.innerHTML = "Update Note"
 
             const div7 = document.createElement('div');
-            div7.className = 'card-fav';
+            div7.classList.add(currentElement.cardStyle1)
             div7.classList.add('tooltip')
 
             const pinToTopToolTip = document.createElement('div');
             pinToTopToolTip.className = 'bottomPinToTop'
-            pinToTopToolTip.innerHTML = "Pin to Top"
+            pinToTopToolTip.innerHTML = "Mark/Unmark"
 
             cardTitle.innerHTML = currentElement.title
 

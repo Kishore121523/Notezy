@@ -316,7 +316,8 @@ var newHandle0 = function(e) {
     let currDiv = e.target.parentElement.parentElement.parentElement;
     let btnId = e.currentTarget.parentElement.id;
 
-    addBtnFunc(btnId.charAt(btnId.length - 1), currDiv.id, currDiv.children[0].id);
+    // slice cuts btn- and return only the specific id
+    addBtnFunc(btnId.slice(4), currDiv.id, currDiv.children[0].id);
 
 }
 
@@ -607,7 +608,8 @@ function updateField(e) {
     thisTitle.innerHTML = tagline.value;
     thisNote.innerHTML = notes.value;
 
-    storeUpdatedNote(tagline.value, notes.value, thisPageId, parseInt(thisCounts.charAt(thisCounts.length - 1)))
+    // slice(5) cuts the "card-" and returns only the id 
+    storeUpdatedNote(tagline.value, notes.value, thisPageId, parseInt(thisCounts.slice(5)))
         // TO GET CURRENT CARD-OPTIONS
     let cardOpt = document.getElementById(thisCounts).childNodes[1].childNodes[1];
 
@@ -655,8 +657,7 @@ function addFavNote(e) {
         let currentPageId = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id
         let currentNoteIdFavListElement = e.target.parentElement.parentElement.parentElement.parentElement
         let currentNoteIdFavListElementFullId = currentNoteIdFavListElement.id
-        let currentCardIdFavNumber = currentNoteIdFavListElementFullId.charAt(currentNoteIdFavListElementFullId.length - 1)
-
+        let currentCardIdFavNumber = currentNoteIdFavListElementFullId.slice(5)
         let fullPageCardArrayLocal;
 
         if (localStorage.getItem("page" + currentPageId) === null) {

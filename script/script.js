@@ -488,8 +488,8 @@ function handle2(targetBtn) {
         let pageDivName = targetBtn.previousElementSibling.innerHTML;
         let pageDivNameId = targetBtn.previousElementSibling.id;
 
-        if (document.querySelector(`#${pageDivName}`).parentElement != null) {
-            let currentPageDivUlSideBar = document.querySelector(`#${pageDivName}`).parentElement;
+        if (document.getElementById(`${pageDivName}`).parentElement != null) {
+            let currentPageDivUlSideBar = document.getElementById(`${pageDivName}`).parentElement;
 
             //removing the ul tag in the sidebar
             currentPageDivUlSideBar.remove()
@@ -955,16 +955,16 @@ function changeThemeNumber() {
         theme = 'default';
         document.body.setAttribute('data-theme', theme)
     } else if (i % 5 === 1) {
-        theme = 'white';
+        theme = 'theme3';
         document.body.setAttribute('data-theme', theme)
     } else if (i % 5 === 2) {
-        theme = 'purple';
+        theme = 'theme4';
         document.body.setAttribute('data-theme', theme)
     } else if (i % 5 === 3) {
-        theme = 'green';
+        theme = 'theme2';
         document.body.setAttribute('data-theme', theme)
     } else {
-        theme = 'orange';
+        theme = 'theme1';
         document.body.setAttribute('data-theme', theme)
     }
 
@@ -979,19 +979,19 @@ function changeTheme() {
         window.localStorage.setItem('theme', theme);
         document.body.setAttribute('data-theme', window.localStorage.getItem('theme'))
     } else if (i % 5 === 1) {
-        theme = 'white';
+        theme = 'theme3';
         window.localStorage.setItem('theme', theme);
         document.body.setAttribute('data-theme', window.localStorage.getItem('theme'))
     } else if (i % 5 === 2) {
-        theme = 'purple';
+        theme = 'theme4';
         localStorage.setItem('theme', theme);
         document.body.setAttribute('data-theme', window.localStorage.getItem('theme'))
     } else if (i % 5 === 3) {
-        theme = 'green';
+        theme = 'theme2';
         localStorage.setItem('theme', theme);
         document.body.setAttribute('data-theme', window.localStorage.getItem('theme'))
     } else {
-        theme = 'orange';
+        theme = 'theme1';
         localStorage.setItem('theme', theme);
         document.body.setAttribute('data-theme', window.localStorage.getItem('theme'))
     }

@@ -65,28 +65,30 @@
 .deletePage {
     display: flex;
     padding: 16px;
-    color: rgb(160, 160, 160);
+    color: var(--pageLink);
     text-decoration: none;
     transition: all 200ms ease;
     cursor: pointer;
     font-size: 0.7rem;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
 }
 
 .deleteIcon {
-    align-self: flex-end;
+    align-self: center;
     padding-bottom: .7px;
-    color: rgb(160, 160, 160);
+    color: var(--pageLink);
     transition: all 200ms ease;
 }
 
 .pageLink {
-    color: rgb(160, 160, 160);
+    color: var(--pageLink);
     text-decoration: none;
     transition: all 200ms ease;
     cursor: pointer;
     font-size: 0.9rem;
+    word-break: break-word;
 }
 
 .deleteIcon:hover {
@@ -94,7 +96,7 @@
 }
 
 .deletePage.active {
-    background-color: rgb(27, 27, 27);
+    background-color: var(--pageLinkActive);
 }
 
 .deletePage.active>a {
@@ -102,6 +104,6 @@
 }
 
 .deletePage:hover:not(.active) {
-    background-color: #414141;
+    background-color: var(--pageLinkNotActive);
     color: var(--fontColor);
 }

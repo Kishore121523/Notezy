@@ -62,6 +62,14 @@ addFolderBtn.addEventListener('click', addNewFolder);
 newFolder = document.querySelector('.newFold');
 newFolder.addEventListener('click', addNewFolder)
 
+
+// Local storage variables
+if (localStorage.getItem("lastVisitedPage") === null) {
+    localStorage.setItem('lastVisitedPage', '')
+} else {
+    lastVisitedPage = localStorage.getItem("lastVisitedPage");
+}
+
 if (localStorage.getItem("allPageArrLocal") === null) {
     allPageArrLocal = [];
 } else {
@@ -215,8 +223,8 @@ function activePage(e) {
             })
 
             e.target.classList.add('active');
-
-            // addNewPage(nameOfPage,idNumberOfPage)
+            localStorage.setItem('lastVisitedPage', e.target.children[0].id)
+                // addNewPage(nameOfPage,idNumberOfPage)
             addNewPage(e.target.children[0].innerHTML, e.target.children[0].id);
         }
 
@@ -232,8 +240,8 @@ function activePage(e) {
                 }
             })
             e.target.parentElement.classList.add('active');
-
-            // addNewPage(nameOfPage,idNumberOfPage)
+            localStorage.setItem('lastVisitedPage', e.target.id)
+                // addNewPage(nameOfPage,idNumberOfPage)
             addNewPage(e.target.innerHTML, e.target.id);
         }
     }
@@ -280,7 +288,7 @@ function addNewPage(nameOfPage, id) {
         ul.appendChild(divBtn);
         outerDiv.appendChild(ul);
         allPages.appendChild(outerDiv);
-
+        localStorage.setItem('lastVisitedPage', pageDivCountLocal)
         allPageArrLocal.push({ nameOfPage: nameOfPage, id: pageDivCountLocal })
         localStorage.setItem("allPageArrLocal", JSON.stringify(allPageArrLocal));
 
@@ -391,13 +399,13 @@ function addCardToPage(e) {
     const pinToTopToolTip = document.createElement('div');
     pinToTopToolTip.className = 'bottomPinToTop'
     pinToTopToolTip.innerHTML = "Mark/Unmark"
-    cardTitle.innerHTML = document.querySelector('#tagline').value
+    cardTitle.innerText = document.querySelector('#tagline').value
 
-    div3.innerHTML = document.querySelector('#note').value;
+    div3.innerText = document.querySelector('#note').value;
 
-    div5.innerHTML = '<i class="far fa-trash-alt"></i>';
-    div6.innerHTML = '<i class="far fa-edit"></i>';
-    div7.innerHTML = '<i class="far fa-star"></i>';
+    div5.innerHTML = '<i class="fal fa-trash-alt"></i>';
+    div6.innerHTML = '<i class="fal fa-edit"></i>';
+    div7.innerHTML = '<i class="fal fa-star"></i>';
 
     li.appendChild(cardTitle)
     li.appendChild(div1);
@@ -567,8 +575,8 @@ function updateNote(e) {
         const notes = document.querySelector('#noteUpd');
 
         // SETTING THE VALUE OF CLICKED CARD'S FIELD TO MODAL FIELD
-        tagline.value = title.innerHTML;
-        notes.value = note.innerHTML;
+        tagline.value = title.innerText;
+        notes.value = note.innerText;
 
         // CHECK IF CURRENTID AND CLICKED CARD'S ID IS SAME
         if (document.getElementById(currentId).getAttribute("id") === currentId) {
@@ -605,8 +613,8 @@ function updateField(e) {
         return
     }
     // UPDATING VALUES FROM MODAL TO CURRENT CARD
-    thisTitle.innerHTML = tagline.value;
-    thisNote.innerHTML = notes.value;
+    thisTitle.innerText = tagline.value;
+    thisNote.innerText = notes.value;
 
     // slice(5) cuts the "card-" and returns only the id 
     storeUpdatedNote(tagline.value, notes.value, thisPageId, parseInt(thisCounts.slice(5)))
@@ -671,14 +679,12 @@ function addFavNote(e) {
             if (fullPageCardArrayLocal[i].id == currentCardIdFavNumber) {
 
                 clicked = parseInt(fullPageCardArrayLocal[i].favClicked)
-                console.log(clicked)
 
                 if (clicked % 2 == 0) {
 
                     let addfavNoteStyle = fullPageCardArrayLocal[i].cardStyle
                     let iconStyle = fullPageCardArrayLocal[i].cardStyle1
 
-                    console.log(iconStyle)
 
                     if (currentNoteIdFavListElement.children[0].classList.contains(addfavNoteStyle)) {
 
@@ -704,7 +710,6 @@ function addFavNote(e) {
                     let addfavNoteStyle = fullPageCardArrayLocal[i].cardStyle
                     let iconStyle = fullPageCardArrayLocal[i].cardStyle1
 
-                    console.log(iconStyle)
 
                     if (currentNoteIdFavListElement.children[0].classList.contains(addfavNoteStyle)) {
 
@@ -753,8 +758,7 @@ function removeNote(e) {
             try {
 
                 //local Storage delete card
-                titleToDelete = e.target.parentElement.parentElement.parentElement.parentElement.children[0].innerHTML
-                contentTODelete = e.target.parentElement.parentElement.parentElement.children[0].innerHTML
+                cardId = e.target.parentElement.parentElement.parentElement.parentElement.id
                 id = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id
 
                 //page0,page1 etc array is selected using the id attribute
@@ -763,8 +767,9 @@ function removeNote(e) {
                 } else {
                     fullPageCardArrayLocal = JSON.parse(localStorage.getItem("page" + id.toString()))
 
+                    //slice operation returns only the id ignoring card-
                     fullPageCardArrayLocal.forEach((eachCard, index) => {
-                        if (eachCard.title == titleToDelete.toString() && eachCard.content == contentTODelete.toString()) {
+                        if (eachCard.id == cardId.slice(5).toString()) {
                             fullPageCardArrayLocal.splice(index, 1)
                         }
                     })
@@ -804,7 +809,6 @@ function alertMsg(text) {
     }
 }
 
-
 // --------------Download as pdf functions---------------------
 document.querySelector('.download').addEventListener('click', genPDF)
 document.querySelector('#overlaySaveFile').addEventListener('click', closeSaveFileModal)
@@ -824,7 +828,6 @@ function genPDF(e) {
     var startX = pageMargin;
     var startY = pageMargin;
 
-    console.log(parentDivChildrenArray)
 
     Array.from(parentDivChildrenArray).forEach((element) => {
 
@@ -888,7 +891,6 @@ function genPDF(e) {
 function setFileName(e) {
     let nameOfFile = ''
     nameOfFile = document.querySelector('#nameFile').value;
-    console.log(nameOfFile)
     e.currentTarget.saveParam.save(`${nameOfFile}.pdf`)
 
     document.querySelector('#nameFile').value = ""
@@ -939,7 +941,6 @@ toggler.addEventListener('click', () => {
 document.querySelector('.themeSwitch').addEventListener('click', changeThemeNumber)
 window.addEventListener('load', changeTheme)
 
-// window.localStorage.setItem('i', '0');
 if (localStorage.getItem("i") === null) {
     localStorage.setItem('i', '0')
 } else {
@@ -973,7 +974,6 @@ function changeThemeNumber() {
 function changeTheme() {
 
     i = parseInt(window.localStorage.getItem('i'))
-        // console.log(i)
     if (i % 5 === 0) {
         theme = 'default';
         window.localStorage.setItem('theme', theme);
@@ -1022,23 +1022,54 @@ function filterTasks(e) {
 
 }
 
+// clear local storage functions 
+
+function fooCloseClearDataModal() {
+    document.querySelector('.clearDataModal').classList.remove("displayBlock");
+    document.querySelector('.clearDataModal').classList.add("displayNone");
+}
+
+document.querySelector('.clearData').addEventListener('click', clearData)
+document.querySelector('#overlayClearData').addEventListener('click', closeclearDataModal)
+
+function clearData(e) {
+    if (e.target.classList.contains('clearData')) {
+        document.querySelector('.clearDataModal').classList.remove("displayNone");
+        document.querySelector('.clearDataModal').classList.add("displayBlock");
+
+        document.getElementById('clearData').addEventListener('click', () => {
+            localStorage.clear();
+            location.reload()
+        })
+
+        document.getElementById('takeMebackClearData').addEventListener('click', () => {
+            fooCloseClearDataModal();
+        })
+
+        document.querySelector('#overlayClearData').addEventListener('click', closeclearDataModal)
+    }
+}
+
 // --------------------------------------Local Storage Functions---------------------------------------------
+
+
+
 document.addEventListener("DOMContentLoaded", getTasks);
 
 function getTasks() {
+
+    if (localStorage.getItem("lastVisitedPage") === null) {
+        localStorage.setItem('lastVisitedPage', '')
+    } else {
+        lastVisitedPage = localStorage.getItem("lastVisitedPage");
+    }
+
     let allPageArrLocal;
 
     if (localStorage.getItem("allPageArrLocal") === null) {
         allPageArrLocal = [];
     } else {
         allPageArrLocal = JSON.parse(localStorage.getItem("allPageArrLocal"));
-    }
-
-    let pageDivCountLocal;
-    if (localStorage.getItem("pageDivCountLocal") === null) {
-        pageDivCountLocal = -1;
-    } else {
-        pageDivCountLocal = localStorage.getItem("pageDivCountLocal");
     }
 
     //sideBar functions
@@ -1062,20 +1093,6 @@ function getTasks() {
         linkDiv.appendChild(deleteIcon)
 
         document.querySelector('.sidebar').appendChild(linkDiv);
-
-        // Check for atleast one anchor tag is present
-        var hasChildDiv = document.querySelector(".sidebar").querySelector("a");
-
-        if (hasChildDiv != null) {
-            sideBarNoti.style.display = 'none'
-        } else {
-            sideBarNoti.style.display = 'block'
-        }
-
-        checkActive(elem.id);
-
-        // adding the page to the main dom
-        addNewPage(elem.nameOfPage, elem.id);
 
     })
 
@@ -1167,13 +1184,13 @@ function getTasks() {
             pinToTopToolTip.className = 'bottomPinToTop'
             pinToTopToolTip.innerHTML = "Mark/Unmark"
 
-            cardTitle.innerHTML = currentElement.title
+            cardTitle.innerText = currentElement.title
 
-            div3.innerHTML = currentElement.content
+            div3.innerText = currentElement.content
 
-            div5.innerHTML = '<i class="far fa-trash-alt"></i>';
-            div6.innerHTML = '<i class="far fa-edit"></i>';
-            div7.innerHTML = '<i class="far fa-star"></i>';
+            div5.innerHTML = '<i class="fal fa-trash-alt"></i>';
+            div6.innerHTML = '<i class="fal fa-edit"></i>';
+            div7.innerHTML = '<i class="fal fa-star"></i>';
 
             li.appendChild(cardTitle)
             li.appendChild(div1);
@@ -1201,6 +1218,23 @@ function getTasks() {
         })
     })
 
+    // Checking and displaying the last visited page
+    allPageArrLocal.forEach((elem) => {
+        if (elem.id == lastVisitedPage) {
 
+            var hasChildDiv = document.querySelector(".sidebar").querySelector("a");
 
+            if (hasChildDiv != null) {
+                sideBarNoti.style.display = 'none'
+            } else {
+                sideBarNoti.style.display = 'block'
+            }
+
+            checkActive(elem.id);
+
+            // adding the page to the main dom
+            addNewPage(elem.nameOfPage, elem.id);
+        }
+
+    })
 }

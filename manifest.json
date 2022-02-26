@@ -1,6 +1,6 @@
 {
     "name": "Notezy",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "description": "Modern Note Taking Extension which let's you organize your notes into pages, update, delete and save notes as pdf",
     "manifest_version": 3,
     "icons": {
@@ -8,10 +8,7 @@
         "48": "48.png",
         "128": "128.png"
     },
-    "background": {
-        "scripts": ["script/modalFunctions.js", "script/script.js", "script/jspdf.min.js"]
-    },
-    "browser_action": {
+    "action": {
         "default_popup": "index.html",
         "default_icon": "128.png"
     }

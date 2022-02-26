@@ -72,3 +72,12 @@ function closeSaveFileModal(e) {
     }
 
 }
+
+function closeclearDataModal(e) {
+
+    if (e.target.classList.contains('clearDataModal')) {
+        document.querySelector('.clearDataModal').classList.remove("displayBlock");
+        document.querySelector('.clearDataModal').classList.add("displayNone");
+    }
+
+}

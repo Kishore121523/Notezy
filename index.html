@@ -55,7 +55,7 @@
         </div>
 
         <div class="top-part">
-            <div class="hamburger"><i class="fas fa-bars"></i></div>
+            <div class="hamburger"><i class="far fa-bars"></i></div>
             <div class="head"></div>
             <div class="info tooltip">
                 <div class="bottom">Notezy<i></i></div>
@@ -78,19 +78,25 @@
                 <div class="dropdown-content">
 
                     <a class="tooltip">
-                        <i class="far fa-question-circle toggler"></i>
-                        <div class="left">Disable Tooltip
-                        </div>
+                        <i class="fal fa-question-circle toggler"></i>
+                        <div class="left">Disable Tooltip</div>
                     </a>
 
                     <a class="tooltip">
-                        <i class="far fa-file-download download"></i>
-                        <div class="left">Save as PDF
-                        </div>
+                        <i class="fal fa-file-download download"></i>
+                        <div class="left">Save as PDF</div>
                     </a>
 
-                    <a class="tooltip"><i class="fal fa-palette themeSwitch"></i><div class="left">Themes
-                    </div></a>
+                    <a class="tooltip">
+                        <i class="fal fa-palette themeSwitch"></i>
+                        <div class="left">Themes</div>
+                    </a>
+
+                    <a class="tooltip">
+                        <i class="fal fa-ban clearData"></i>
+                        <div class="left">Clear All Data</div>
+                    </a>
+
                 </div>
             </div>
         </div>
@@ -156,10 +162,20 @@
 
         <div class="deletePageModal displayNone" id="overlayDeletePage">
             <div class="modalContainerNew">
-                <p class="deletePageText">This page will be Deleted Permanantly!</p>
+                <p class="deletePageText">This page will be Deleted Permanently!</p>
                 <div class="buttonDeleteDiv">
                     <button class="deleteCardBtn" id="deletePage">Delete Page</button>
                     <button id="takeMebackPage" class="deleteCardBtn">Take me back</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearDataModal displayNone" id="overlayClearData">
+            <div class="modalContainerNew">
+                <p class="deletePageText">ALL DATA WILL BE CLEARED PERMANENTLY!</p>
+                <div class="buttonDeleteDiv">
+                    <button class="clearDataBtn" id="clearData">Clear Data</button>
+                    <button id="takeMebackClearData" class="clearDataBtn">Take me back</button>
                 </div>
             </div>
         </div>
